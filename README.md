@@ -1,5 +1,31 @@
-# Gamory
-projeto Gamory
+
+# Gamory 
+
+### Autor: Rafael Martins Amaral
+
+Gamory é um projeto de uma aplicação web inspirada no Letterboxd, focada na avaliação e organização de jogos digitais.
+O sistema permite que usuários atribuam notas e escrevam comentários, criando um histórico pessoal com experiências de seus jogos favoritos.
+
+## 📚 Documentação do Projeto
+
+Para entender as regras de negócio, o escopo e a arquitetura técnica da aplicação, consulte os documentos abaixo:
+
+- [📄 Product Requirements Document (PRD)](./docs/prd.md) - Visão geral, atores e histórias de usuário.
+- [🛠️ Especificação Técnica (Tech Spec)](./docs/spec.md) - Diagrama de banco de dados (DER), dicionário de dados e rotas da API (JSON Server).
+
+---
+
+## 💻 Tecnologias e Dependências
+
+- **Framework CSS:** MaterializeCSS
+- **JavaScript:**
+  - **JQuery** - Para realizar animações e manipulação do DOM.
+  - **JSON Server** - Para simular uma API REST.
+ 
+  ---
+
+  ## ✅ Checklist | Indicadores de Desempenho (ID) dos Resultados de Aprendizagem (RA)
+
 
  RA1 - Utilizar Frameworks CSS para estilização de elementos HTML e criação de layouts responsivos.
 
