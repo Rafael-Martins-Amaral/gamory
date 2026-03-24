@@ -4,7 +4,7 @@
 ### Autor: Rafael Martins Amaral
 
 Gamory é um projeto de uma aplicação web inspirada no Letterboxd, focada na avaliação e organização de jogos digitais.
-O sistema permite que usuários atribuam notas e escrevam comentários, criando um histórico pessoal com experiências de seus jogos favoritos.
+O sistema permite que usuários litem, atribuam notas e escrevam comentários sobre jogos, criando um histórico pessoal com experiências de seus jogos favoritos.
 
 ## 📚 Documentação do Projeto
 
