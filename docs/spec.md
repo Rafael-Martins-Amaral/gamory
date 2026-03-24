@@ -13,33 +13,7 @@ Aplicação web front-end com:
 
 ---
 
-## 📁 2. Estrutura de Pastas
-
-gamory/
- │
- ├── index.html
- ├── cadastro.html
- ├── lista.html
- │
- ├── assets/
- │ ├── css/
- │ │ ├── style.scss
- │ │ ├── style.css
- │ │
- │ ├── js/
- │ │ ├── app.js
- │ │ ├── api.js
- │ │ ├── storage.js
- │ │ ├── jquery.js
- │ │
- │ ├── img/
- │
- ├── db.json
- ├── package.json
-
----
-
-## 🎨 3. Estilização
+## 🎨 2. Estilização
 
 ### Framework:
 - Bootstrap 5
@@ -50,7 +24,7 @@ gamory/
 
 ---
 
-## 📱 4. Responsividade
+## 📱 3. Responsividade
 
 - Mobile First
 - Grid Bootstrap
@@ -59,7 +33,7 @@ gamory/
 
 ---
 
-## 📊 5. Modelo de Dados
+## 📊 4. Modelo de Dados
 
 ### Entidade: Jogo
 
@@ -73,7 +47,7 @@ gamory/
  "comentario": "string"
 }
 
-🧾 6. Formulário
+🧾 5. Formulário
 Campos:
 título (text)
 gênero (select)
@@ -85,11 +59,11 @@ HTML5 (required)
 JavaScript (regex)
 jQuery (eventos)
 
-💾 7. Armazenamento
+💾 6. Armazenamento
 LocalStorage:
 localStorage.setItem("jogos", JSON.stringify(lista));
 
-🌐 8. API (JSON Server)
+🌐 7. API (JSON Server)
 Endpoint:
 http://localhost:3000/jogos
 
@@ -104,42 +78,42 @@ fetch(url, {
 DELETE (opcional)
 fetch(url + id, { method: "DELETE" })
 
-🔄 9. API Pública (ViaCEP)
+🔄 8. API Pública (ViaCEP)
 fetch(`https://viacep.com.br/ws/${cep}/json/`)
 
-⚡ 10. jQuery
+⚡ 9. jQuery
 Uso:
 Manipulação de DOM
 Eventos de formulário
 
-🔌 11. Plugin jQuery
+🔌 10. Plugin jQuery
 Mask Plugin:
 $("#cep").mask("00000-000");
 
-🧪 12. Validações
+🧪 11. Validações
 Regex exemplo:
 /^[A-Za-z0-9 ]+$/
 
-🛠️ 13. Ferramentas
+🛠️ 12. Ferramentas
 Node.js
 NPM
 JSON Server
 Git
 ESLint / Prettier
 
-🚀 14. Execução do Projeto
+🚀 13. Execução do Projeto
 Instalar dependências:
 npm install
 Rodar API:
 json-server --watch db.json --port 3000
 
-📌 15. Boas Práticas
+📌 14. Boas Práticas
 Código modular
 Separação de responsabilidades
 Comentários claros
 Versionamento com Git
 
-✅ 16. Checklist Técnico
+✅ 15. Checklist Técnico
 HTML estruturado
 CSS responsivo
 SCSS aplicado
