@@ -46,8 +46,8 @@ Todas as páginas devem ser **responsivas** utilizando o framework CSS escolhido
 ```mermaid
 erDiagram
     USUARIOS ||--o{ JOGOS : "cadastra"
-    USUARIOS ||--o{ INTERACAO : "realiza"
-    JOGOS ||--o{ INTERACAO : "recebe"
+    USUARIOS ||--o{ AVALIACOES : "realiza"
+    JOGOS ||--o{ AVALIACOES : "recebe"
 
     USUARIOS {
         string id PK
@@ -62,11 +62,10 @@ erDiagram
         string titulo
         string genero
         string plataforma
-        int nota
         
     }
 
-    INTERACAO {
+    AVALIACOES {
         string id PK
         string usuarioId FK
         string jogoId FK
