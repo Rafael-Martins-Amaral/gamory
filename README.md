@@ -17,11 +17,14 @@ Para entender as regras de negócio, o escopo e a arquitetura técnica da aplica
 
 ## 💻 Tecnologias e Dependências
 
-- **Framework CSS:** MaterializeCSS
+- **Framework CSS:**
+  - **Bootstrap** - Uma base de codigos prontos, atualmente o framework mais popular do mundo.
 - **JavaScript:**
   - **JQuery** - Para realizar animações e manipulação do DOM.
   - **JSON Server** - Para simular uma API REST.
- 
+- **API Publica**
+  - GameBrain API.
+  
   ---
 
   ## ✅ Checklist | Indicadores de Desempenho (ID) dos Resultados de Aprendizagem (RA)
