@@ -23,7 +23,7 @@ Para entender as regras de negócio, o escopo e a arquitetura técnica da aplica
 - **JavaScript:**
   - **JQuery** - Para realizar animações e manipulação do DOM.
   - **JSON Server** - Para simular uma API REST.
-- **API Publica**
+- **API Pública**
   - **GameBrain API** Base de dados de Games.
   
   ---
