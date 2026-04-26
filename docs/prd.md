@@ -17,7 +17,7 @@ Desenvolver uma aplicação web responsiva que permita:
 ### 👤 1.2 Público-Alvo
 - Estudantes
 - Gamers casuais e hardcore
-- Usuários que desejam organizar jogos jogados
+- Usuários que desejam avaliar os jogos jogados
 
 ---
 
