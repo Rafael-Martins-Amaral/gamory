@@ -39,7 +39,7 @@ Desenvolver uma aplicação web responsiva que permita:
 
 ### 🗓️ 2.2 Escopo do Projeto
 
-- 3 páginas HTML
+- 4 páginas HTML
 - Formulário com validação
 - API fake
 - LocalStorage
