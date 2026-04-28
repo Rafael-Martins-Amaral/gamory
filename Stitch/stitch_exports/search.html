@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gamory - Search &amp; Browse</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06db54",
+                        "background-light": "#f5f8f6",
+                        "background-dark": "#14181C",
+                        "surface": "#21282D",
+                        "text-main": "#FFFFFF",
+                        "text-muted": "#829AA8",
+                        "accent": "#40BCF4",
+                        "border-color": "#2C363F",
+                    },
+                    fontFamily: {
+                        "display": ["Outfit", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "3px",
+                        "sm": "3px",
+                        "lg": "4px",
+                        "xl": "6px",
+                        "full": "9999px",
+                    },
+                    boxShadow: {
+                        'poster': '0 8px 24px rgba(0,0,0,0.6)',
+                        'poster-hover': '0 12px 32px rgba(0,0,0,0.8)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: theme('colors.background-dark');
+            color: theme('colors.text-main');
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: theme('colors.background-dark');
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface');
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.border-color');
+        }
+
+        /* Poster aspect ratio and interactions */
+        .poster-card {
+            aspect-ratio: 2 / 3;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            border-radius: theme('borderRadius.DEFAULT');
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .poster-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: theme('boxShadow.poster-hover');
+            border: 2px solid theme('colors.primary');
+        }
+
+        .poster-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(to top, rgba(20, 24, 28, 0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .poster-card:hover::after {
+            opacity: 1;
+        }
+
+        .poster-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.2s ease;
+            z-index: 20;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .poster-card:hover .poster-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: transparent;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 1px solid theme('colors.text-muted');
+            border-radius: 3px;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em theme('colors.background-dark');
+            background-color: theme('colors.background-dark');
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: theme('colors.primary');
+            border-color: theme('colors.primary');
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&amp;display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="antialiased min-h-screen flex flex-col overflow-x-hidden">
+    <!-- Global Header -->
+    <header
+        class="sticky top-0 z-50 grid grid-cols-3 items-center border-b border-solid border-border-color bg-surface px-6 md:px-10 py-3 h-[64px]">
+        <a class="flex items-center gap-3 text-text-main hover:opacity-80 transition-opacity justify-self-start"
+            href="#">
+            <div class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div class="size-7 text-primary">
+                    <svg fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z">
+                        </path>
+                    </svg>
+                </div>
+                <h1 class="font-logo text-2xl tracking-tight font-bold" style="color: #FFFFFF;">GAMORY</h1>
+            </div>
+        </a>
+        <div class="hidden md:flex justify-center">
+            <div
+                class="flex w-full max-w-md h-9 items-stretch rounded bg-background-dark border border-border-color focus-within:border-text-muted transition-colors">
+                <div class="text-text-muted flex items-center justify-center pl-3">
+                    <span class="material-symbols-outlined text-[18px]">search</span>
+                </div>
+                <input
+                    class="w-full bg-transparent border-none text-text-main text-sm focus:ring-0 placeholder:text-text-muted px-2"
+                    placeholder="Quick search..." type="text" />
+            </div>
+        </div>
+        <div class="flex items-center gap-6 justify-self-end">
+            <button
+                class="hidden md:flex cursor-pointer items-center justify-center rounded h-9 px-5 bg-primary text-background-dark font-display text-sm uppercase tracking-[0.015em] hover:bg-[#05c44a] transition-colors"><span>Log
+                    In</span></button>
+            <button class="md:hidden text-text-muted hover:text-text-main">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+            <div class="bg-surface border border-border-color bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 cursor-pointer hover:border-text-muted transition-colors"
+                data-alt="portrait of a young woman with a neutral expression in moody lighting"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEij30KG-MC7zqXaBEHyEdpyn7E2L-bynd-HTDoC1jX-j9eVWnUvGjO0kt7AOgo-5f76WHbt_5ZvLpgFyt8dtR4eVSlr_ZhpsifXDCpZD-ogWSOT1a1sQNe8aL2MsIVsst4XJcm9bZG2ccDdwOoPOqD3_xRQsCFEKhAhYdqOfcz13eDj_Ty9SOeNr54ALnfsHJTd0291M_APVYpQcVJ-heB16LGQ5O9HF37F3MnyEPiYLjjLNS53lCgOHeBH-4VblLIwBJN0QXxEk");'>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Area -->
+    <div class="flex flex-1 w-full max-w-[1600px] mx-auto">
+        <!-- Filter Sidebar (Desktop) -->
+        <aside
+            class="hidden lg:flex flex-col w-[280px] shrink-0 border-r border-border-color bg-background-dark sticky top-[64px] h-[calc(100vh-64px)] overflow-y-auto">
+            <div class="p-6 border-b border-border-color">
+                <h2 class="font-display text-lg text-text-main mb-4">Browse</h2>
+                <div
+                    class="flex w-full items-stretch rounded h-10 bg-surface border border-border-color focus-within:border-primary transition-colors">
+                    <input
+                        class="w-full bg-transparent border-none text-text-main text-sm focus:ring-0 placeholder:text-text-muted px-3"
+                        placeholder="Search titles..." type="text" />
+                    <button
+                        class="text-text-muted hover:text-primary flex items-center justify-center pr-3 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">search</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col p-4 gap-1">
+                <!-- Genre Filter -->
+                <details class="group" open="">
+                    <summary
+                        class="flex cursor-pointer items-center justify-between p-2 rounded hover:bg-surface transition-colors select-none">
+                        <span class="text-text-main text-sm font-semibold uppercase tracking-wider">Genre</span>
+                        <span
+                            class="material-symbols-outlined text-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+                    </summary>
+                    <div class="flex flex-col gap-2 p-2 pt-1 pb-4">
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input checked="" type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Action
+                                RPG</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Adventure</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Platformer</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Shooter</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Strategy</span>
+                        </label>
+                        <button class="text-left text-xs text-accent hover:text-primary mt-1 transition-colors">Show
+                            all...</button>
+                    </div>
+                </details>
+                <div class="h-px w-full bg-border-color my-1"></div>
+                <!-- Platform Filter -->
+                <details class="group" open="">
+                    <summary
+                        class="flex cursor-pointer items-center justify-between p-2 rounded hover:bg-surface transition-colors select-none">
+                        <span class="text-text-main text-sm font-semibold uppercase tracking-wider">Platform</span>
+                        <span
+                            class="material-symbols-outlined text-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+                    </summary>
+                    <div class="flex flex-col gap-2 p-2 pt-1 pb-4">
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input checked="" type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">PC</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">PlayStation
+                                5</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Nintendo
+                                Switch</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">Xbox
+                                Series X</span>
+                        </label>
+                    </div>
+                </details>
+                <div class="h-px w-full bg-border-color my-1"></div>
+                <!-- Release Decade Filter -->
+                <details class="group">
+                    <summary
+                        class="flex cursor-pointer items-center justify-between p-2 rounded hover:bg-surface transition-colors select-none">
+                        <span class="text-text-main text-sm font-semibold uppercase tracking-wider">Release
+                            Decade</span>
+                        <span
+                            class="material-symbols-outlined text-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+                    </summary>
+                    <div class="flex flex-col gap-2 p-2 pt-1 pb-4">
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">2020s</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">2010s</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group/label">
+                            <input type="checkbox" />
+                            <span
+                                class="text-text-muted text-sm group-hover/label:text-text-main transition-colors">2000s</span>
+                        </label>
+                    </div>
+                </details>
+            </div>
+        </aside>
+        <!-- Main Grid Area -->
+        <main class="flex-1 flex flex-col min-w-0 bg-background-dark">
+            <!-- Grid Header -->
+            <div
+                class="px-4 md:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-color bg-background-dark/95 backdrop-blur z-20 sticky top-[64px]">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-3">
+                        <button
+                            class="lg:hidden flex items-center justify-center size-8 rounded bg-surface border border-border-color text-text-main">
+                            <span class="material-symbols-outlined text-[20px]">tune</span>
+                        </button>
+                        <span class="text-text-muted text-sm">Showing <strong
+                                class="text-text-main font-semibold">1,204</strong> games</span>
+                    </div>
+                    <!-- Active Filters -->
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-border-color text-xs text-text-main">
+                            Action RPG
+                            <button class="text-text-muted hover:text-accent flex items-center"><span
+                                    class="material-symbols-outlined text-[14px]">close</span></button>
+                        </span>
+                        <span
+                            class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-border-color text-xs text-text-main">
+                            PC
+                            <button class="text-text-muted hover:text-accent flex items-center"><span
+                                    class="material-symbols-outlined text-[14px]">close</span></button>
+                        </span>
+                        <button class="text-xs text-text-muted hover:text-text-main px-1">Clear all</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    <span class="text-xs text-text-muted uppercase tracking-wider font-semibold">Sort by:</span>
+                    <select
+                        class="bg-surface border border-border-color text-text-main text-sm rounded px-3 py-1.5 focus:ring-primary focus:border-primary cursor-pointer appearance-none pr-8 relative">
+                        <option>Popularity</option>
+                        <option>Release Date (Newest)</option>
+                        <option>Release Date (Oldest)</option>
+                        <option>Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Poster Grid -->
+            <div class="p-4 md:p-6">
+                <!-- Density: min 8px gap, auto-fill for fluid responsive columns -->
+                <div
+                    class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2 md:gap-3">
+                    <!-- Poster Items -->
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="dark fantasy landscape with a glowing mystical tree in the distance, moody atmospheric lighting"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqc5HCuD0vF9Ow80zaZ8iJtzNfPfDyQFPUJikoBH6lem71yXipx6mH3uiscA2AFqMHuX7gO0TfwLBg5hSMHKbAUX6OnhPVyiSrmXxcICFR2IE6TcUbfwxZSdU3KrSnbHkyNDFIy_7fdB9Da_KNru60xAc2CZRoWRAMeZEgdgVU04vyMuTeIkS9bQwYLtYniD1Yjdx8hSpwJIJAdAFwPrwD66zgA5JK5DTR2kqHMDQJ3DZ7ZwkX6HPJuNwkpHhY76ML6pAdFZ0C2ws'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Elden Ring</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="cyberpunk city street at night with neon lights and rain reflecting on pavement"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVxvhJkx2HI3lN8aXwEuEORplB-VuJQEfFP49gxCpX8gIS6oFFltfJnl8n1St_zfg2K7Upa2Fk8o5MpOMSXRpTNaSX6Z9Lw8cR9XYIhKQvMrWam5gse0CkLt2jTCfiDjjw1t8KJyOH9VN2hAYq7j6ZrTTfvt4j5hwBYzOZOB5460iGXPtMpr8D-xi4ILa5gBNrOcHEanqSi0GynDL00a8bWy_sRwrYJdlOVNGJCZSQMtgXrIwaUHYnmiSWT6xexTEYsweUjqe3Hzk'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Cyberpunk 2077</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="minimalist vast desert landscape with a single figure looking at a massive ancient ruin in the distance"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPFooOBslgXzCZHuiM9YGQRLFURXjX5xdBt_V6Yr5zX3rl5jD3Rotfzkw5rHbrHv2qhcaxkDbvkyTA5raxTr0UuWIgFIL8vuYmTreVDdW5wqhNXyWVuFmq49RHfyUoK9P9hPzumjMfAatoGc_kWufkeQ-Uu1Y1ONBy5cWu9uSHUnafi6uHKz2vmhtMBQJPSYBBFasDKZoAZU7CMpHe6exzHaSzqa7zEWbdZ9lqhytbs9X2QkQEy61pabZKSXEhWHfhOnYU0QC0TbI'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Journey</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="vibrant colorful abstract geometric shapes floating in a dark void"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMgXtcF8RQ98TRG3_X2sLCnbzJWW-oRZNg97poV-UrMEV1nLWstAiXaf0xEezpWAC2jyjFBEtpTJdmDu5rRi9wSl6knlJTy0zDadkFmB9UmYreb65MYva8ynDC4mamngIjFoUgtqnwmWaCy3Cl1X90Xl9H4zxEcoN0xlIqfaLF6GmeNj2NDVTSngGuu71Rl8nOAM_CU6wA6uo2ncMDbs-17KE1MrtQmcszkDcNAKd40qeMSquvSQrLnjUnZ-PZfxyLz4MmtxxiWOc'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Tetris Effect</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="post-apocalyptic overgrown city ruins with lush green foliage covering concrete structures"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0zpdgUjY7GaTfXz8rmnkDD8H_p8IHKWNGcUev5t_WeqmeJLc1CdbNBTWb9ltlG50MbNrb6GF6HzDDXUdy9DFLv9MulEXAN4CYiwwvP-6ft-YQEVfF94wZq8s8NiiGKHHk4jy7bMKfv_GzosyQlazbhwyDBA1XYTVCuhe7UQ1-doBBuo5TqYZwNC1mY6VBnG3brm0116irrKXCuNQm9C6InLQj5OtT5E7vNVqnjvs_s4gObzZ5CMtgcb0HZ6hnb15Gya2exOvXtQ4'); background-size: cover; background-position: center;">
+                        <div class="poster-title">The Last of Us Part II</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="pixel art style magical forest with glowing mushrooms and deep purple hues"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcoUa9rl9dIUaiQcZfckZJHiiMGMLT4RHrABvjNDEWVLPtw7-hYJ3-9hfETAgENHZ7nwHvqCzfo8T3xWR8fin9rEPzKUw8TWGzRhnQjTV92De3Bvawc-845GaWsUyjnXAtxoFHGK3E_5TQQry88VV_Np0gtO9_A1jGgZ4O5zxfj0wPsj7ryf4V28xMIXnYlyK15SS4UlyjsH3a8uND8gqQteOoq2DSZ3zAQxiGk6i68PV4o-k_WmAi1CQUBMTbedQiHxZrIQVYfOM'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Celeste</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="sci-fi interior of a spaceship with cold blue lighting and sleek metallic surfaces"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXVFVlQJcIM1oGehlDaFnuj8ByUeCGKqW56BCN28hruUX7tIpRIsEOdy0Dh9ptEuyJLteW8mBQDhLuHO-tQx6fSFKimNx1uDWPhkkorrnSoN93EkNt9bjyIqmaGOtn_zIjiex0d48wCrhWh6mBRVcyFvTlh-4nAqabpqks-jAWML-0D-6LuPXr3MAmQR4TBNl1YSnLmGNWEYVhnKRSfzo7VmTh8lazIYPWZTH9WZf6CvE3X1afGL_ldOPwXF0naWrWotiTuFWLpB8'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Mass Effect</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="breathtaking view from a mountain peak overlooking a vast snowy valley under a clear sky"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAuWsjtRnk3aWFjSd3HSLUGA4YBeMvsdlbOjNiwut6AZHitg8vOi-hHFUXe80luRWWqiUakblWMKO_kz84bk7-GDQ499rGaLGHysZmYFvEL5qNeQj0lIyTNMk9GiKVF68UmR0g47nJDvOIWpFSnSdC9CGn8OMfwIHrCvqVex2xO18y4KxCC1uVhs7fse8-wPDn-yx_GTH4zah_pyo8Vf2kMrpIpjnE-QUIiJFAkSE4ooQMhMKmXCt0BDMhqYf94ftA5BcONOW6230'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Red Dead Redemption 2</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="intense fiery explosion with silhouettes of soldiers in a gritty war setting"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD3xoIEL6zsIYNjVhgfdWHt5nmyrv8uU8h4vNjxZP59ApXB9s9JnPsbr-uNRLQllFXwRtqpUf2BK2zXt6FeACZ896yIRd5zjgObMpF-S30uyTs8WzQ5sT_iQ2j0xOXrFdVUruBAJ6jNdKUnLm9oztXxeeqV6ZZjpPYIq-iGV2Dt3_kWhF8z_YAM-SvNMFm2ri2jaCm51OFXPXs1oC0LeorHPfoN57T0wMngkH7P35uLIJUEWZhsxaIciMmlZ7WHczv4vj02j4AsO6M'); background-size: cover; background-position: center;">
+                        <div class="poster-title">DOOM Eternal</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="retro 80s synthwave landscape with a glowing grid and a bright neon sun setting"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtkp8jzUCpOeyqrXYzNXgui5wacfoaWkxtRzMdOkrAJco5ExJzVOCh64UIvOV408G7VKJ0OZUZZOkryZl-23iRLXbqt3fx50R6nJMY7G7So93wKSmOpo5Duu3fdZYgHtx0df1uDX-ZUbbVqZyn67Y4pNoDKJDoeRxSHlDrA4hdpP_qqn0yxUZjSuTxzaEqw1zFI4BBRfI2UkRDy6DHmb98KxCf3sith7ER6U33-ELtTApMsGnsvKrNYYy2uhhK7By6EcSJcl5f7M8'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Hotline Miami</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="majestic high fantasy castle perched on a cliff edge with dramatic storm clouds gathering"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDqmAtrVfBYV561ZjupYACMc04pV_U1cpQDUHQUmV680p8V1ququvvnSN9bTokKCxbIFpo7XQSH7peaMbmimxcAusaab0-TPrnSmXlgAmG2ziMMAy8tYAiO9FDGOXOQxWOIRHGzpa5ItXGXvDHHavfpkBP3z_6_mZmWMoi60gHzxKRTIdRJDQFh0HfYh-zmHrJP0xAjOg67F1DGmq08jPXsbl6PrguklLHGLtcqiNGe8QfIy7HprBGZj858visK1hrtU2a3Dq7Zu_I'); background-size: cover; background-position: center;">
+                        <div class="poster-title">The Witcher 3</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="macro shot of intricate clockwork gears and glowing blue energy in a steampunk style"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqvQ8gGAsnBHv8RJDL31H32OZdwlz169fQf5GMYZztD-DnXG6dB_2Xlzpouttmh1ZVFHDQLvGLZZ0NZuqPmWjis5d5fOGfpeYhIkJ3XWgZyoEXVSK3ExCpt6nqTD-GK3CNWlJ5JDHEAKgLKmEcALZgMtzb-dMUmzvY51IZ4bHHxqR9E1sXENyTfQIclT6WICF62AiYZ6TVp-t0QH_gXRY9CjITuR11Mv-A5JmAXAEN9kO4A40dXr4aK6qTJfiTUIYjFyHbpEh2hIU'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Dishonored</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="abstract view of a person falling through an endless surreal dreamscape with floating islands"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgXdLvnnqOE6fPs7M87xGGkT_AJiYks7_FueFnRPO8jr0lJ8UnLbZIR1E52d-dMz8jWmZe03G20B6IDeMqXV36xpbywQVRRHasb5Ag6GqIElIHxfr-5dsiD9gLKKVVt0U2ZReQ0vH0uQbYGcLW8DlTl9mGfU2dUFh_ehlc5nT2v6cu18vARBN8rtbShNze0LHrnhlt0JxzmTMZksY5WuTApljmKiXzzHiJMTiKFcoTgNt7A4Wrzx-RRUAQ7ur-oqyvqJwhqwzUo1g'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Control</div>
+                    </div>
+                    <div class="poster-card shadow-poster bg-surface"
+                        data-alt="creepy dark corridor of an abandoned asylum with flickering light and long shadows"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnVukn9DCGZGqLCNeahu8cq6SGktkDhFG-napYQ_tUG8NwG12URNX8q6Yrl2H_GK3cGJcOF3EBwK4IsDHen2qJnVbKWwctcF9RCd7PMgK3kBD1eA2HlieClljTWKkdDiijD5bzImBPzFhvkzNGhQcjyv7Hn7iohDIiJL0sGd6BZX6kL-9knsZic8V_O9Q7gB8Wu8ZSex7J3KioUzPms2XLpi3tVCA9wa7SPX8JoOQ3QA1RJIpY475n8aKKIrGs0dfw0qzLjFekKtY'); background-size: cover; background-position: center;">
+                        <div class="poster-title">Silent Hill 2</div>
+                    </div>
+                    <!-- Loading Skeletons -->
+                    <div class="poster-card bg-surface animate-pulse"></div>
+                    <div class="poster-card bg-surface animate-pulse"></div>
+                    <div class="poster-card bg-surface animate-pulse"></div>
+                    <div class="poster-card bg-surface animate-pulse"></div>
+                </div>
+                <!-- Pagination / Load More -->
+                <div class="mt-12 mb-8 flex justify-center">
+                    <button
+                        class="px-6 py-2 border border-border-color rounded bg-surface text-text-main font-semibold hover:border-primary hover:text-primary transition-colors">
+                        Load More
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

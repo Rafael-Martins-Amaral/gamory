@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gamory - User Profile</title>
+    <!-- Google Fonts: Manrope (Body) & Outfit (Headings) -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00E054", // Updated to match PRD brand accent
+                        "background-light": "#f5f8f6",
+                        "background-dark": "#14181C", // Main page background from PRD
+                        "surface": "#21282D", // Cards, modals, header bar
+                        "surface-hover": "#2C363F",
+                        "text-main": "#FFFFFF",
+                        "muted": "#829AA8",
+                        "accent": "#40BCF4"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Outfit", "sans-serif"], // Updated to Plus Jakarta Sans for logo/headings
+                        "body": ["Manrope", "sans-serif"] // Body
+                    },
+                    borderRadius: {
+                        "DEFAULT": "3px", // Barely rounded from PRD
+                        "sm": "3px",
+                        "md": "6px",
+                        "lg": "8px",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'poster': '0 8px 24px rgba(0,0,0,0.6)',
+                        'modal': '0 24px 48px rgba(0,0,0,0.8)'
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #14181C;
+            color: #FFFFFF;
+        }
+
+        .poster-card {
+            transition: all 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .poster-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 2px #00E054, 0 8px 24px rgba(0, 0, 0, 0.6);
+            z-index: 10;
+        }
+
+        .poster-img {
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tooltip styling */
+        .poster-tooltip {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #14181C;
+            color: #FFFFFF;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 20;
+            border: 1px solid #2C363F;
+            pointer-events: none;
+        }
+
+        .poster-card:hover .poster-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .follow-btn.following {
+            background-color: #829AA8;
+            color: #14181C;
+        }
+    </style>
+</head>
+
+<body class="font-body antialiased min-h-screen flex flex-col overflow-x-hidden">
+    <!-- Shared TopNavBar (Included as this is a Destination screen) -->
+    <div class="relative flex h-auto w-full flex-col bg-surface group/design-root overflow-x-hidden z-50 shadow-md">
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-4 md:px-8 lg:px-40 flex flex-1 justify-center py-3">
+                <div class="layout-content-container flex flex-col w-full max-w-[960px] flex-1">
+                    <header class="flex items-center justify-between whitespace-nowrap h-16 relative">
+                        <div class="flex items-center">
+                            <a class="flex items-center text-text-main hover:opacity-80 transition-opacity gap-2"
+                                href="#">
+                                <div class="size-7 text-primary">
+                                    <svg fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h1 class="font-display text-2xl tracking-tight font-bold" style="color: #FFFFFF;">
+                                    GAMORY</h1>
+                            </a>
+                        </div>
+                        <div class="absolute left-1/2 -translate-x-1/2 hidden md:block">
+                            <label class="flex flex-col min-w-40 h-10 w-64">
+                                <div
+                                    class="flex w-full flex-1 items-stretch rounded h-full bg-background-dark border border-surface-hover focus-within:border-primary transition-colors">
+                                    <div class="text-muted flex items-center justify-center pl-3" data-icon="search"
+                                        data-size="20px">
+                                        <span class="material-symbols-outlined text-[20px]">search</span>
+                                    </div>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden bg-transparent text-text-main focus:outline-0 focus:ring-0 border-none placeholder:text-muted px-3 text-sm font-medium"
+                                        placeholder="Search games, users..." value="" />
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <button
+                                class="hidden sm:flex h-9 cursor-pointer items-center justify-center rounded px-5 bg-primary text-background-dark font-display text-sm font-bold uppercase tracking-[0.015em] hover:bg-opacity-90 transition-colors">
+                                Log In
+                            </button>
+                            <button class="sm:hidden text-text-main hover:text-primary">
+                                <span class="material-symbols-outlined text-[24px]">add_circle</span>
+                            </button>
+                            <a class="block h-8 w-8 rounded-full overflow-hidden border border-surface-hover hover:border-primary transition-colors"
+                                href="#">
+                                <img alt="Current user avatar" class="h-full w-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuArkPf13D_h0wEt7XKwvcZUclAxzeFsEoT_BPffor1NMvnQ591sopcpgqjFishViBra8Jh1M5Ammz-yb7sLF2NR0ebk2gAUzJ4t7pHPdpTzOf2YbzhO_nKlufG_kkEZtcaayjrkaAb2aYrDWpSA1t5yrSSW5VCknPEeDXNJyfa5HDQF_h1Eqb-4hJsYA4IGueA324E2WmIOucVZVDPnW7HNwMAFN9Lh3VjjBFs1zyvYmtBLS0CwKVwJieXVAT7ALx3jHEjXa58MgSI" />
+                            </a>
+                        </div>
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content Area -->
+    <main class="flex-1 w-full flex justify-center pb-20 pt-8 px-4 sm:px-6">
+        <div class="w-full max-w-[960px] flex flex-col gap-10">
+            <!-- Profile Header Section -->
+            <section class="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start">
+                <!-- Avatar -->
+                <div class="shrink-0 relative">
+                    <div class="w-[120px] h-[120px] rounded-full overflow-hidden border-2 border-surface shadow-poster">
+                        <img alt="AlexTheGreat profile picture" class="w-full h-full object-cover"
+                            data-alt="portrait of a young man with a slight smile, dramatic side lighting, dark moody background"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEK5Nb-AqB2bRVaD1JNHL_v-uCMX_iYny4Z2DIL3PHphDg9o8Kj639LGg4cctgvaLjuLWYZuMlggOzJBV1NEJ46yWck_Bjbx92kNKqeDdZ2YPCVMlGdlKFMWLCKqI_TIGZohKqlesf5ZqPMrGOOuI54p9MOtSvEnMods1uY9MMgEnCmsXYpbV-QdCzXkezu1_h05VLhWo6fWyVk-ggbsx3370-0d-ZMGK4bd_p4P8JPhPztKxEgAjmW7kQGaqUw4Cs8hutVO87xM0" />
+                    </div>
+                </div>
+                <!-- Info & Bio -->
+                <div class="flex-1 flex flex-col text-center md:text-left">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
+                        <h2 class="font-display text-3xl md:text-[40px] font-bold text-text-main leading-tight">
+                            AlexTheGreat</h2>
+                        <!-- Follow Button Toggle State Example -->
+                        <button
+                            class="follow-btn self-center md:self-auto h-9 px-6 bg-primary text-background-dark font-display text-sm font-bold uppercase tracking-[0.015em] rounded hover:opacity-90 transition-all min-w-[120px]"
+                            onclick="this.classList.toggle('following'); this.innerText = this.classList.contains('following') ? 'Following' : 'Follow';">
+                            Follow
+                        </button>
+                    </div>
+                    <p class="text-text-main text-[15px] font-medium leading-relaxed max-w-2xl mb-4">
+                        Completionist &amp; RPG enthusiast. Logging my journey through the backlog. Mostly playing
+                        narrative-driven games and punishing souls-likes. Currently struggling through Shadow of the
+                        Erdtree.
+                    </p>
+                </div>
+            </section>
+            <!-- Stats Ribbon -->
+            <section class="bg-surface rounded border border-surface-hover py-4 px-6 shadow-sm">
+                <div
+                    class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-surface-hover/0 md:divide-surface-hover">
+                    <div class="flex flex-col">
+                        <span class="font-display text-2xl font-bold text-text-main">482</span>
+                        <span class="text-[12px] font-semibold text-muted uppercase tracking-wider mt-1">Games
+                            Played</span>
+                    </div>
+                    <div class="flex flex-col border-l border-surface-hover md:border-none pl-6 md:pl-0">
+                        <span class="font-display text-2xl font-bold text-text-main">34</span>
+                        <span class="text-[12px] font-semibold text-muted uppercase tracking-wider mt-1">This
+                            Year</span>
+                    </div>
+                    <div
+                        class="flex flex-col pt-4 md:pt-0 border-t border-surface-hover md:border-none md:border-l mt-4 md:mt-0">
+                        <span class="font-display text-2xl font-bold text-text-main">128</span>
+                        <span
+                            class="text-[12px] font-semibold text-muted uppercase tracking-wider mt-1">Following</span>
+                    </div>
+                    <div
+                        class="flex flex-col pt-4 md:pt-0 border-t border-l border-surface-hover md:border-none md:border-l mt-4 md:mt-0 pl-6 md:pl-0">
+                        <span class="font-display text-2xl font-bold text-text-main">8,492</span>
+                        <span
+                            class="text-[12px] font-semibold text-muted uppercase tracking-wider mt-1">Followers</span>
+                    </div>
+                </div>
+            </section>
+            <!-- Favorites Strip -->
+            <section class="flex flex-col gap-4 border-b border-surface-hover pb-10">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-display text-xl font-bold text-muted uppercase tracking-wider text-sm">All-Time
+                        Favorites</h3>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                    <!-- Favorite 1 -->
+                    <a class="poster-card block shadow-poster cursor-pointer" href="#">
+                        <img alt="Favorite game 1" class="poster-img"
+                            data-alt="dark atmospheric fantasy scene with a glowing ethereal tree in the distance, moody lighting, cinematic composition"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGdphEgQQStgp1_NpRnK2J5bDs_KPp4S-a98uHQuR3iOmWQ9GsBHQ38c8M_h090w5o_9hJVTOHrGAH82mJr7O4Vsb_FrhukAYA9sp8JJqjEdYwW70WN1VwqC1OqUkidyyZHQzUIbMBCaDU4YvcoxPpCuVbzoShAxdnaykqP3RWX_ly16wkbuYiVNeH8BAX-j--qkOy3IniqN5bGNHmZhXknhims2_4iHaenYeaJi0YZ5O2SpwhUUrcBD-XBsESTnN7rXOlmphjXDo" />
+                        <div class="poster-tooltip">Elden Ring</div>
+                    </a>
+                    <!-- Favorite 2 -->
+                    <a class="poster-card block shadow-poster cursor-pointer" href="#">
+                        <img alt="Favorite game 2" class="poster-img"
+                            data-alt="cyberpunk city street at night with neon lights reflecting in puddles, rain, gritty atmosphere"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC59himarKnnKajimw3BUxKXtsnkjMDZBhy1Ij-PXZpXK3b50f18mtfQJI5BP5ky5eB6pvqSKg3fUNpv31KgAI1N_t603NZhkaVD0ysVTO-JPfr2tNW-hJq61pqzw1FGXAOR7_a33G9Jw3fZld3R7Usp12sKivW0cDhYNSHS9rbPPdnpmjwa8AC8ddMOqsaHvpHF_Wf4zlBo_xUiELQjQUusv0-iIs-k6F2KmH6DUGoqMsFpL5JvBPnduu_Bj64M6qwnt9OAgZzik" />
+                        <div class="poster-tooltip">Cyberpunk 2077</div>
+                    </a>
+                    <!-- Favorite 3 -->
+                    <a class="poster-card block shadow-poster cursor-pointer" href="#">
+                        <img alt="Favorite game 3" class="poster-img"
+                            data-alt="retro arcade game screen showing space invaders style pixel art, glowing CRT monitor effect"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2i0pPZqUlagTDIE2_qwuRmFxyaA7EGEoX3X2F72_XdMe5c8FLqyk0dlWnInOhkY-8cErs0Y-t28MX-AFnQ07mKNiRX7ravYZyVb8tST3kvzooiLwv6r2-cXbWyquLysyXs74UrJco03DT_Qvcoq7P1xqv-2xM4pQi4vKEaOZN1Yb3vMyv7oJ-XUKEWnLj-AtiI6aXG9L8jzToWVg8qUv4tnd_eB9ET7uv0Zk9qUO9rWwu-fvHta_WQr8L7gXS1WOEnbXMtmVLkc4" />
+                        <div class="poster-tooltip">Hollow Knight</div>
+                    </a>
+                    <!-- Favorite 4 (Placeholder State Example) -->
+                    <div
+                        class="poster-card block bg-surface border border-surface-hover rounded-sm aspect-[2/3] flex items-center justify-center text-muted hover:border-muted transition-colors cursor-pointer border-dashed">
+                        <span class="material-symbols-outlined text-3xl opacity-50">add</span>
+                        <div class="poster-tooltip">Add Favorite</div>
+                    </div>
+                </div>
+            </section>
+            <!-- Diary Grid (Recent Activity) -->
+            <section class="flex flex-col gap-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-display text-xl font-bold text-text-main">Recent Reviews</h3>
+                    <a class="text-accent text-sm font-semibold hover:underline" href="#">View Diary</a>
+                </div>
+                <!-- 6 Column Grid on Desktop, 4 on Tablet, 3 on Mobile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4"><!-- Review Card 1 -->
+                    <div
+                        class="bg-surface p-4 rounded border border-surface-hover flex gap-4 hover:bg-surface-hover transition-colors cursor-pointer">
+                        <img alt="Elden Ring" class="w-12 h-[72px] object-cover rounded shadow-sm shrink-0"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGdphEgQQStgp1_NpRnK2J5bDs_KPp4S-a98uHQuR3iOmWQ9GsBHQ38c8M_h090w5o_9hJVTOHrGAH82mJr7O4Vsb_FrhukAYA9sp8JJqjEdYwW70WN1VwqC1OqUkidyyZHQzUIbMBCaDU4YvcoxPpCuVbzoShAxdnaykqP3RWX_ly16wkbuYiVNeH8BAX-j--qkOy3IniqN5bGNHmZhXknhims2_4iHaenYeaJi0YZ5O2SpwhUUrcBD-XBsESTnN7rXOlmphjXDo" />
+                        <div class="flex flex-col min-w-0">
+                            <h4 class="font-bold text-text-main text-sm truncate">Elden Ring: Shadow of the Erdtree</h4>
+                            <div class="flex text-primary text-xs my-1">
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                            </div>
+                            <p class="text-muted text-xs line-clamp-2 italic leading-relaxed">An absolute masterpiece of
+                                level design and boss encounters. The difficulty is punishing but fair...</p>
+                        </div>
+                    </div>
+                    <!-- Review Card 2 -->
+                    <div
+                        class="bg-surface p-4 rounded border border-surface-hover flex gap-4 hover:bg-surface-hover transition-colors cursor-pointer">
+                        <img alt="Cyberpunk 2077" class="w-12 h-[72px] object-cover rounded shadow-sm shrink-0"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC59himarKnnKajimw3BUxKXtsnkjMDZBhy1Ij-PXZpXK3b50f18mtfQJI5BP5ky5eB6pvqSKg3fUNpv31KgAI1N_t603NZhkaVD0ysVTO-JPfr2tNW-hJq61pqzw1FGXAOR7_a33G9Jw3fZld3R7Usp12sKivW0cDhYNSHS9rbPPdnpmjwa8AC8ddMOqsaHvpHF_Wf4zlBo_xUiELQjQUusv0-iIs-k6F2KmH6DUGoqMsFpL5JvBPnduu_Bj64M6qwnt9OAgZzik" />
+                        <div class="flex flex-col min-w-0">
+                            <h4 class="font-bold text-text-main text-sm truncate">Cyberpunk 2077</h4>
+                            <div class="flex text-primary text-xs my-1">
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                            </div>
+                            <p class="text-muted text-xs line-clamp-2 italic leading-relaxed">Night City is more alive
+                                than ever. The Phantom Liberty expansion truly fixed the narrative pacing...</p>
+                        </div>
+                    </div>
+                    <!-- Review Card 3 -->
+                    <div
+                        class="bg-surface p-4 rounded border border-surface-hover flex gap-4 hover:bg-surface-hover transition-colors cursor-pointer">
+                        <img alt="Hollow Knight" class="w-12 h-[72px] object-cover rounded shadow-sm shrink-0"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2i0pPZqUlagTDIE2_qwuRmFxyaA7EGEoX3X2F72_XdMe5c8FLqyk0dlWnInOhkY-8cErs0Y-t28MX-AFnQ07mKNiRX7ravYZyVb8tST3kvzooiLwv6r2-cXbWyquLysyXs74UrJco03DT_Qvcoq7P1xqv-2xM4pQi4vKEaOZN1Yb3vMyv7oJ-XUKEWnLj-AtiI6aXG9L8jzToWVg8qUv4tnd_eB9ET7uv0Zk9qUO9rWwu-fvHta_WQr8L7gXS1WOEnbXMtmVLkc4" />
+                        <div class="flex flex-col min-w-0">
+                            <h4 class="font-bold text-text-main text-sm truncate">Hollow Knight</h4>
+                            <div class="flex text-primary text-xs my-1">
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                            </div>
+                            <p class="text-muted text-xs line-clamp-2 italic leading-relaxed">Atmospheric perfection.
+                                Still the best metroidvania I've ever played. Can't wait for Silksong.</p>
+                        </div>
+                    </div>
+                    <!-- Review Card 4 -->
+                    <div
+                        class="bg-surface p-4 rounded border border-surface-hover flex gap-4 hover:bg-surface-hover transition-colors cursor-pointer">
+                        <img alt="Neon White" class="w-12 h-[72px] object-cover rounded shadow-sm shrink-0"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLMvOYNfBRkTuZU0dqkgvtd7-gIQrm_c6UV8Wd-YR1BSvjoFKzuHpohPq6ZMxs-Sgue0BYAEwPRVh5AgFjmfP1l-zSiDTIqaX2uzcs_2xvouXx9KaHYzaPYcUG8nRhzKp-EqQm8cq0nHEXPqXXBlaQDLjhx60UZXmF-fWFHGUKWSmbL68etgC833Q5BmVJKJsxcnhFojEX50g0cvwtxyi23-S2dMxCJvx1Icv_dxQMNBlnoQ1_QOy1dEG0yuixP6wYv_9XfK3EbkI" />
+                        <div class="flex flex-col min-w-0">
+                            <h4 class="font-bold text-text-main text-sm truncate">Neon White</h4>
+                            <div class="flex text-primary text-xs my-1">
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                            </div>
+                            <p class="text-muted text-xs line-clamp-2 italic leading-relaxed">Speedrunning heaven. The
+                                card-based movement mechanics are incredibly fluid and satisfying.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center">
+                    <button
+                        class="h-10 px-8 bg-surface border border-surface-hover text-text-main font-display text-sm font-bold uppercase tracking-[0.015em] rounded hover:bg-surface-hover transition-colors">
+                        Load More
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Gamory - Game Detail</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#06db54",
+                        background: {
+                            light: "#f5f8f6",
+                            dark: "#14181C"
+                        },
+                        surface: "#21282D",
+                        muted: "#829AA8",
+                        accent: "#40BCF4",
+                        border: "#2C363F"
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                        heading: ["Outfit", "sans-serif"],
+                        body: ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "3px",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "9999px"
+                    },
+                    boxShadow: {
+                        'poster': '0 8px 24px rgba(0,0,0,0.6)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #14181C;
+            color: #FFFFFF;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&amp;display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-background-dark text-white min-h-screen overflow-x-hidden flex flex-col">
+    <!-- TopNavBar Shared Component -->
+    <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-border px-10 py-3 bg-surface sticky top-0 z-50 relative">
+        <div class="flex items-center">
+            <a class="flex items-center text-white hover:opacity-80 transition-opacity" href="#" style="">
+                <div class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <div class="size-7 text-primary">
+                        <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h1 class="font-logo text-2xl tracking-tight font-bold"
+                        style="color: rgb(255, 255, 255); font-family: &quot;Plus Jakarta Sans&quot;, sans-serif;">
+                        GAMORY</h1>
+                </div>
+            </a>
+        </div>
+        <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-md hidden md:block">
+            <label class="flex flex-col !h-10" style="">
+                <div
+                    class="flex w-full flex-1 items-stretch rounded h-full bg-background-dark border border-border focus-within:border-primary transition-colors">
+                    <div class="text-muted flex items-center justify-center pl-4 pr-2">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+                    </div>
+                    <input
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-white focus:outline-none focus:ring-0 border-none bg-transparent h-full placeholder:text-muted px-2 text-sm font-medium"
+                        placeholder="Search games, users..." value="">
+                </div>
+            </label>
+        </div>
+        <div class="flex justify-end gap-6 items-center">
+            <button
+                class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-9 px-5 bg-primary text-background-dark text-sm font-bold uppercase tracking-[1.5px] font-heading hover:bg-white transition-colors"
+                style=""><span class="" style="">Log In</span></button>
+            <button
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-border hover:border-primary transition-colors"
+                data-alt="portrait of a young woman with a neutral expression, used as a user avatar profile picture"
+                style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDtjFK4qrwncpIxl80jVO5jiLzDqedGxDj3cTU-9kxOacgJyffGBxyW3Jpi6TdnyhllL_Z9mjKdJ1460ZwLuGVXLMDGPr0B-40lw_oQTIVLm68oGJ3xeORrf1nmXSEi4XMdGKL86tGnNC-Kyj2g04OKqWa5EVXrQeidlexNa81n1WXS5t0q_50t85O4tmUnURjWScPA-E19LZyNye33HUMM7rFnM6r3JuXsOY9G7qixYSgBN4BQmy2wodkcwVCKfE4YdIrioV06sn8&quot;);"></button>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col relative pb-20">
+        <!-- Hero Backdrop -->
+        <div class="w-full h-[400px] relative -z-10">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                data-alt="dark, atmospheric landscape showing a ruined gothic castle under a gloomy sky, reminiscent of dark fantasy video game concept art"
+                style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAR81rPV5stHNeREAudHrDgK2lewEdvqelRfnJOo-SjOi3vlccdjigY72Nn7Et40RTb8YxQYFRQR13NOjBqQyzzWt1LYBVYE-FjKfFJLr_BXklSPFYGUSP2LHeAMnMkY9sElq7cw7Syq_3BuUjF7siYwtY6QSHfjZBxnWn_6a03TD9A-otnvO0-g8EqJ9JtNrYOOBHhPxM_klvtf6M7dPmGwNo2YFayrAcg3zprmQcJYZfkaCAaidsGuuLEuDedQZUKDWpBMoXtkx0&quot;);">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent">
+            </div>
+        </div>
+        <!-- Content Container -->
+        <div
+            class="max-w-[960px] w-full mx-auto px-6 -mt-[200px] flex flex-col md:flex-row gap-8 lg:gap-12 relative z-10">
+            <!-- Left Column: Poster & Actions (25%) -->
+            <aside class="w-full md:w-1/4 flex-shrink-0 flex flex-col gap-6 items-center md:items-start">
+                <!-- Poster -->
+                <div
+                    class="w-[240px] aspect-[2/3] rounded border border-white/10 shadow-poster overflow-hidden bg-surface relative group">
+                    <img alt="Elden Ring Cover Art" class="w-full h-full object-cover"
+                        data-alt="video game box art showing a solitary knight in ornate armor standing before a glowing, fractured golden ring in a dark sky"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz4-whukkiw-XIRSUzl391PX7kxGLPAteLdIiUFcabS_gj014S2PuLLPDI6JGA_0C_3oJEQ5ZHztc3Rsq3f_Sl1wTYIFw-A1lQ-cgLs_Y2fZCjv8AsDvftli3O4G-9wXyB6T-6Cviys-bKVkQrrnqkpKwUcighIT7-bWkl2I5V4kFRlx_opuAA-KNLKUfxs40IAkBSNHQqvJmsZMx2fg-LPIl0O8KG-JiHVgvHdmo1c7FgNrsi5y2-gIZtVb5rjnymq55rCI-_868"
+                        style="">
+                    <div
+                        class="absolute inset-0 border-2 border-transparent group-hover:border-primary transition-colors rounded pointer-events-none">
+                    </div>
+                </div>
+                <!-- Action Panel -->
+                <div class="w-[240px] bg-surface rounded border border-border p-3 flex flex-col gap-2 shadow-lg">
+                    <button
+                        class="w-full bg-primary text-background-dark font-heading font-bold text-sm uppercase tracking-[1.5px] py-3 rounded hover:bg-white transition-colors flex items-center justify-center gap-2"
+                        style="">
+                        <span class="material-symbols-outlined"
+                            style="font-size: 18px; font-variation-settings: &quot;FILL&quot; 1;">add_circle</span>Review</button>
+                    <div class="flex gap-2 mt-1">
+                        <button
+                            class="flex-1 bg-background-dark border border-border text-muted font-body text-xs font-semibold py-2.5 rounded hover:bg-border hover:text-accent transition-colors flex flex-col items-center justify-center gap-1"
+                            style="">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">favorite</span>
+                            Wishlist
+                        </button>
+                        <button
+                            class="flex-1 bg-background-dark border border-border text-muted font-body text-xs font-semibold py-2.5 rounded hover:bg-border hover:text-accent transition-colors flex flex-col items-center justify-center gap-1"
+                            style="">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">share</span>
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </aside>
+            <!-- Right Column: Details & Reviews (75%) -->
+            <section class="w-full md:w-3/4 flex flex-col mt-4 md:mt-24">
+                <!-- Title & Meta -->
+                <div class="mb-8">
+                    <h1 class="text-4xl md:text-5xl font-heading font-bold text-white mb-3 tracking-tight" style="">
+                        Elden Ring</h1>
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-muted font-medium mb-6">
+                        <span class="text-white bg-surface px-2 py-1 rounded border border-border" style="">2022</span>
+                        <span class="" style="">Directed by <a class="text-white hover:text-accent transition-colors"
+                                href="#" style="">Hidetaka Miyazaki</a></span>
+                        <span class="" style="">Developed by <a class="text-white hover:text-accent transition-colors"
+                                href="#" style="">FromSoftware</a></span>
+                    </div>
+                    <!-- Global Rating Strip -->
+                    <div
+                        class="flex items-center gap-4 bg-surface/50 border border-border rounded p-4 max-w-md backdrop-blur-sm group cursor-pointer hover:bg-surface transition-colors">
+                        <div class="flex flex-col">
+                            <span class="text-xs text-muted font-semibold uppercase tracking-wider mb-1" style="">Global
+                                Rating</span>
+                            <div class="flex items-center gap-1 text-primary">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: &quot;FILL&quot; 1;">star_half</span>
+                            </div>
+                        </div>
+                        <div class="h-10 w-px bg-border mx-2"></div>
+                        <div class="flex flex-col group-hover:text-accent transition-colors">
+                            <span class="text-2xl font-heading font-bold text-white" style="">4.8</span>
+                            <span class="text-xs text-muted" style="">from 142k logs</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="prose prose-invert max-w-none mb-12">
+                    <p class="text-muted leading-relaxed text-[15px]" style="">
+                        The Golden Order has been broken. Rise, Tarnished, and be guided by grace to brandish the power
+                        of the Elden Ring and become an Elden Lord in the Lands Between. A vast world where open fields
+                        with a variety of situations and huge dungeons with complex and three-dimensional designs are
+                        seamlessly connected.
+                    </p>
+                </div>
+                <hr class="border-border mb-8">
+                <!-- Reviews Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-heading font-bold text-white uppercase tracking-wide" style="">Popular
+                            Reviews</h3>
+                        <a class="text-sm text-muted hover:text-accent font-semibold transition-colors flex items-center gap-1"
+                            href="#" style="">
+                            More Reviews <span class="material-symbols-outlined"
+                                style="font-size: 16px;">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div class="flex flex-col gap-6">
+                        <!-- Review Item 1 -->
+                        <article
+                            class="bg-surface rounded border border-border p-5 flex gap-4 transition-colors hover:border-primary/50">
+                            <div class="flex-shrink-0">
+                                <div class="size-10 rounded-full bg-cover bg-center border border-border"
+                                    data-alt="portrait of a man with glasses and a beard, neutral background, user avatar"
+                                    style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDXCayu4ncYMKERRTptSM9d2s0X-NTmJZR4_Q4udGOZ_uxuIv8uLo8OFwMvoI3L-bv3oXeLL7Uu0unVA8hukQhe7K32T_Cknz-qWrBJUc0RLX0Fx_S6KPaIlB61j1N9_A_oKYvDxQVEhYiOvjKD2uxWNl7wnqMiK8cEbKpSMpuO7c6xLdW3Ta1UekiVZE5Pobjaq2C-SfIcLvnIxddluAHT1hbnX_D86QKzv_nrYkqGEjlkEExrvD_03C6PXE3Zj_VKUasRlUKAJaU&quot;);">
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <a class="font-bold text-white hover:text-accent transition-colors text-sm"
+                                            href="#" style="">Marcus L.</a>
+                                        <span class="text-muted text-xs" style="">•</span>
+                                        <div class="flex text-primary text-[14px]">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-muted font-medium" style="">Oct 12, 2023</span>
+                                </div>
+                                <p class="text-[15px] text-gray-300 leading-relaxed mb-3" style="">
+                                    A monumental achievement in world design and player freedom. The sense of discovery
+                                    is unmatched in the modern era of hand-holding AAA games. Every corner hides a
+                                    secret, a brutal boss, or a breathtaking vista.
+                                </p>
+                                <div class="flex items-center gap-4 text-xs font-semibold text-muted">
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors"
+                                        style="">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">thumb_up</span>
+                                        1.2k Likes
+                                    </button>
+                                    <button class="flex items-center gap-1 hover:text-white transition-colors" style="">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 16px;">chat_bubble</span> 42 Comments
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- Review Item 2 -->
+                        <article
+                            class="bg-surface rounded border border-border p-5 flex gap-4 transition-colors hover:border-primary/50">
+                            <div class="flex-shrink-0">
+                                <div class="size-10 rounded-full bg-cover bg-center border border-border"
+                                    data-alt="portrait of a smiling woman with dark hair, user avatar"
+                                    style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC84WRscm3tIG9q6TvSiSPuc-0m57Tn5vFVE6bTZHENIs1233uo1CUOk1GRqM6UCA3Gt-6qeQF1XxDTIinIgn6YR5yfNYNCxbJSsbZR7s_zyT9SlkBgt7ZPs2OO7i9exsEQuF54JzA07O_CR-2G_aPRxrmZLgccCEgU9j35nJaAbUYIDQZszip-7X1siTieJx6b7G6Tf7jBli9nIivu3bly24uCfXkyTLT3Lh8PfprusaXYpbfBBkj9KOZHiyBGjpIIU5Gt8GqACcE&quot;);">
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <a class="font-bold text-white hover:text-accent transition-colors text-sm"
+                                            href="#" style="">Sarah_Plays</a>
+                                        <span class="text-muted text-xs" style="">•</span>
+                                        <div class="flex text-primary text-[14px]">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 14px; color: rgb(44, 54, 63);">star</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-muted font-medium" style="">Sep 04, 2023</span>
+                                </div>
+                                <p class="text-[15px] text-gray-300 leading-relaxed mb-3" style="">
+                                    Incredible game, but docked a star because the late-game difficulty spike feels a
+                                    bit artificial compared to the brilliant pacing of Limgrave and Liurnia. Still an
+                                    absolute must-play.
+                                </p>
+                                <div class="flex items-center gap-4 text-xs font-semibold text-muted">
+                                    <button class="flex items-center gap-1 hover:text-primary transition-colors"
+                                        style="">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">thumb_up</span>
+                                        856 Likes
+                                    </button>
+                                    <button class="flex items-center gap-1 hover:text-white transition-colors" style="">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 16px;">chat_bubble</span> 18 Comments
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

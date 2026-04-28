@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamory - Minimalismo Cinematográfico</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+  <!-- Universal Header -->
+  <header class="app-header glass" id="app-header">
+    <a href="#" class="brand-logo" onclick="app.navigate('home')">
+      <i class="ph-fill ph-game-controller"></i>
+      <span>Gamory</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#" class="nav-link active" onclick="app.navigate('home')">Home</a>
+      <a href="#" class="nav-link" onclick="app.navigate('search')">Browse</a>
+      <a href="#" class="nav-link" onclick="app.navigate('profile')">Profile</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-primary" onclick="app.navigate('login')">Sign In</button>
+      <div class="profile-avatar" onclick="app.navigate('profile')" style="display:none;" id="user-avatar">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
+          alt="User">
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Login Screen -->
+  <main class="screen active" id="screen-login">
+    <div class="login-card glass">
+      <h2>Welcome Back</h2>
+      <p>Enter the cinematic universe of Gamory</p>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+
+      <button class="btn btn-primary" style="margin-top: 16px; padding: 16px;" onclick="app.login()">
+        Authenticate <i class="ph-bold ph-arrow-right"></i>
+      </button>
+    </div>
+  </main>
+
+  <!-- 2. Home / Activity Feed -->
+  <main class="screen" id="screen-home">
+    <div class="main-content">
+      <!-- Hero Carousel -->
+      <div class="hero-carousel"
+        style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+        <div class="hero-slide">
+          <div class="hero-content">
+            <span class="tag"
+              style="background: var(--accent-color); margin-bottom: 16px; display: inline-block;">Featured</span>
+            <h1>Cyber Protocol: Next Gen</h1>
+            <p>Experience the ultimate neon-drenched strategy RPG. Out now with exclusive content.</p>
+            <div style="display: flex; gap: 16px;">
+              <button class="btn btn-primary" onclick="app.navigate('detail')"><i class="ph-fill ph-play-circle"></i>
+                View Details</button>
+              <button class="btn btn-glass"><i class="ph-bold ph-plus"></i> Wishlist</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Feed Section -->
+      <h2 class="section-title">Trending Now <i class="ph-bold ph-fire" style="color: var(--accent-color)"></i></h2>
+      <div class="game-grid">
+        <!-- Game Card -->
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">Action RPG</span>
+            <span class="game-title">Neon Rebirth</span>
+          </div>
+        </div>
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">Co-Op Shooter</span>
+            <span class="game-title">Void Runners</span>
+          </div>
+        </div>
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">Indie Pixel</span>
+            <span class="game-title">Retro Grid</span>
+          </div>
+        </div>
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1622819584099-e0af12ba5fb4?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">Simulation</span>
+            <span class="game-title">Astro Architect</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3. Search & Browse -->
+  <main class="screen" id="screen-search">
+    <div class="main-content">
+      <div class="search-header">
+        <div class="search-bar">
+          <i class="ph-bold ph-magnifying-glass search-icon"></i>
+          <input type="text" placeholder="Search for games, publishers, or genres...">
+        </div>
+        <div class="filter-tags">
+          <span class="tag active">All Games</span>
+          <span class="tag">Action</span>
+          <span class="tag">RPG</span>
+          <span class="tag">Multiplayer</span>
+          <span class="tag">Strategy</span>
+          <span class="tag">Indie</span>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1627855325492-95786a5a8f7c?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">Strategy</span>
+            <span class="game-title">Tactics Alpha</span>
+          </div>
+        </div>
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-meta">VR Experience</span>
+            <span class="game-title">Synth Wave</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 4. Game Detail -->
+  <main class="screen" id="screen-detail">
+    <div class="detail-hero"
+      style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+      <div class="detail-content">
+        <img class="detail-poster"
+          src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop"
+          alt="Poster">
+        <div class="detail-info">
+          <h1 class="detail-title">Cyber Protocol: Next Gen</h1>
+          <div class="detail-stats">
+            <div class="stat-item"><i class="ph-fill ph-star"></i> 4.9 (1.2k Reviews)</div>
+            <div class="stat-item"><i class="ph-fill ph-calendar"></i> Released 2026</div>
+            <div class="stat-item"><i class="ph-fill ph-tag"></i> RPG / Cyberpunk</div>
+          </div>
+          <p class="detail-desc">
+            Immerse yourself in a dystopian future where every choice matters. Hack your way through mega-corporations,
+            upgrade your cyberware, and discover the truth behind the Neon Protocol. Featuring groundbreaking ray-traced
+            visuals
+            and a branching narrative system.
+          </p>
+          <div style="display: flex; gap: 16px;">
+            <button class="btn btn-primary"><i class="ph-bold ph-download-simple"></i> Install (85 GB)</button>
+            <button class="btn btn-glass" onclick="app.openModal()"><i class="ph-bold ph-pencil-simple"></i> Write
+              Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h2 class="section-title">Community Reviews</h2>
+      <div class="review-card glass">
+        <div class="review-header">
+          <div class="profile-avatar" style="width: 32px; height: 32px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
+              alt="User">
+          </div>
+          <span class="review-author">Sarah Jenkins</span>
+          <span class="review-rating">
+            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+              class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+          </span>
+        </div>
+        <p style="color: var(--text-muted)">Absolutely stunning visuals and the combat mechanics are so fluid. The
+          storyline kept me hooked for 40 hours straight!</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 5. User Profile -->
+  <main class="screen" id="screen-profile">
+    <div class="main-content">
+      <div class="profile-header">
+        <img class="profile-avatar-large"
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop"
+          alt="Profile">
+        <div class="profile-info">
+          <h1>Alex Chen</h1>
+          <p style="color: var(--text-muted);">Pro Gamer • Member since 2024</p>
+          <div class="profile-stats-row">
+            <div class="profile-stat">
+              <span class="stat-value">124</span>
+              <span class="stat-label">Games Owned</span>
+            </div>
+            <div class="profile-stat">
+              <span class="stat-value">4.2k</span>
+              <span class="stat-label">Hours Played</span>
+            </div>
+            <div class="profile-stat">
+              <span class="stat-value">86</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Recently Played</h2>
+      <div class="game-grid">
+        <div class="game-card" onclick="app.navigate('detail')">
+          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop"
+            alt="Game">
+          <div class="game-card-overlay">
+            <span class="game-title">Void Runners</span>
+            <div
+              style="width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin-top: 8px;">
+              <div style="width: 75%; height: 100%; background: var(--accent-color); border-radius: 2px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 6. Comment / Review Modal -->
+  <div class="modal-overlay" id="review-modal">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <h2>Write a Review</h2>
+        <button class="close-btn" onclick="app.closeModal()"><i class="ph-bold ph-x"></i></button>
+      </div>
+
+      <div class="star-rating">
+        <i class="ph-fill ph-star"></i>
+        <i class="ph-fill ph-star"></i>
+        <i class="ph-fill ph-star"></i>
+        <i class="ph-fill ph-star"></i>
+        <i class="ph-regular ph-star"></i>
+      </div>
+
+      <textarea class="input-glass" placeholder="Share your experience with this game..."></textarea>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button class="btn btn-glass" onclick="app.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="app.closeModal()">Submit Review</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
